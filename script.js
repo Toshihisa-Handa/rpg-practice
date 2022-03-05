@@ -4,7 +4,10 @@ document.write('<img id="rico" src="rico.png">')
 let rico = new Object();
 rico.x = 0;
 rico.y = 0;
+rico.move = 0;
 
+//押されたキーを入れておく
+let pressed_key = '';
 
 //キーオブジェクト
 let key = new Object();
@@ -14,14 +17,6 @@ key.right = false;
 key.left = false;
 
 
-
-
-
-
-
-
-
-
 function main(){
 
     //キーボードを押した時
@@ -29,11 +24,35 @@ function main(){
     //キーボードを離した時
     addEventListener("keyup", keyupfunc);
 
-	//方向キーが押されている場合（ばあい）は、りこちゃんが移動する
-	if( key.left === true ) rico.x -= 32;//「32」は画像のサイズが32pxでRPGの１マスが32pxである為、このサイズに設定している。	
-	if( key.up === true ) rico.y -= 32;		
-	if( key.right === true ) rico.x += 32;	
-	if( key.down === true ) rico.y += 32;	
+    //rico.moveが0の時、移動する準備をする
+    if(rico.move ===0){
+        if(key.left ===true){
+            rico.move =32
+            pressed_key ='left'
+        }
+        if(key.up ===true){
+            rico.move =32
+            pressed_key ='up'
+        }
+        if(key.right ===true){
+            rico.move =32
+            pressed_key ='right'
+        }
+        if(key.down ===true){
+            rico.move =32
+            pressed_key ='down'
+        }
+    }
+
+   //rico.moveが0より大きい時、移動する
+   if(rico.move >0){
+       rico.move -= 4;
+       if ( pressed_key === 'left' ) rico.x -= 4;
+       if ( pressed_key === 'up' ) rico.y -= 4;
+       if ( pressed_key === 'right' ) rico.x += 4;
+       if ( pressed_key === 'down' ) rico.y += 4;   }
+
+
     document.getElementById('rico').style.top = rico.y + "px";
     document.getElementById('rico').style.left = rico.x + "px";
 
